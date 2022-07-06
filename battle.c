@@ -7,11 +7,13 @@
 #include <stdlib.h>
 #define ROW 8 // filas     
 #define COL 8 // columnas 
+#define Nboats 4
+
+// icons
 #define SEA '#'
 #define BOAT ' '
 #define SINK 'X'
-#define Nboats 8
-
+#define BALL '*'
     // ROW eq i and x
     // COL eq j and y
 void paint(char Board[ROW][COL]){
@@ -65,16 +67,17 @@ int main (){
         paint(Board);
         if (Board[y][x] == BOAT)
           printf("\nLas coordenadas ya estan ocupadas!!!");
-        else if (y >= 8 || x >=8)
+        else if (y >= 8 || x >=7)
           printf("\nCoordenadas Fuera de rango!!!");
         printf("\n\nCoordenadas del barco#%d (x,y):\n",ships+1); scanf("%d%d",&x,&y);
-        
-      } while (Board[y][x] == BOAT || (y >= 8 || x >=8));
+        x = abs(x);
+        y = abs(y);        
+      } while (Board[y][x] == BOAT || (y >= 8 || x >=7));
       
         
         Board[y][x] =Board[y][x+1]  = BOAT; 
         ships ++;
-    } while (ships <4);
+    } while (ships < Nboats);
     
 
 
@@ -82,6 +85,8 @@ int main (){
     Board_reset(inGame_Board);
 
     int turn =4;
+
+    ships =0;
     do
     {
 
@@ -94,12 +99,22 @@ int main (){
         inGame_Board[y][x] =inGame_Board[y][x+1] = SINK; 
         printf("Has destruido un barco!!!\n");
         turn ++;
+        ships ++;
       }else{
         printf("No le diste a nada!!!\n");
-        turn --;  
+        turn --;
+        inGame_Board[y][x] = BALL;  
       }
-            
-    } while (turn>=0);
+
+      if (ships == Nboats && turn>=0)
+        win =1;
+      else if (turn==0)
+        break;
+      
+
+    } while (!win);
+    
+
     
 
 
