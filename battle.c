@@ -5,8 +5,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#define ROW 8 // filas     
-#define COL 8 // columnas 
+#define ROW 8 // ROW eq i and x
+#define COL 8 // COL eq j and y
+ 
 #define Nboats 4
 
 // icons
@@ -14,8 +15,7 @@
 #define BOAT ' '
 #define SINK 'X'
 #define BALL '*'
-    // ROW eq i and x
-    // COL eq j and y
+    
 void paint(char Board[ROW][COL]){
 
   int j , i;
@@ -43,10 +43,10 @@ void Board_reset(char Board[ROW][COL]){
 
 int main (){
 
-    int i,j, k;
+    int i,j;
     char Board[ROW][COL];
     char inGame_Board[ROW][COL];
-         // [x][y]
+
     int boat[8][2];
     int ships=0;
     int x , y;
@@ -89,7 +89,7 @@ int main (){
     ships =0;
     do
     {
-
+      system("cls || clear");
       paint(inGame_Board);
 
       printf("\nTurnos restantes #%d\n", turn);
@@ -114,7 +114,13 @@ int main (){
 
     } while (!win);
     
-
+    //FIN
+    if(win)
+      printf("HAS GANADO EL JUEGO!!!\n");
+    else{
+      printf("HAS PERDIDO EL JUEGO!!!\nDistribucion de los barcos\n");
+      paint(Board);
+    }
     
 
 
